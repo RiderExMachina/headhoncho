@@ -15,15 +15,69 @@ of this project will be in the wiki.
 
 using namespace std;
 
+int cash;
+int influence;
+int choice;
+/**/
+int base_game();
 int game_switch();
 int main();
-int cash;
 
-int start_game(){
+int taxi(){
+	srand(static_cast<unsigned int>(time(0)));
+	int money_received = rand();
+	int taxi_money;
+	cout << "\n\nYou drive a taxi around the town";
+	taxi_money = (money_received % 100) + 51;
+	cout << " and make $" << taxi_money << "!"; 
+	cash = cash + taxi_money;
+	influence += 2;
+	base_game();
+
+}
+
+int job_switch(){
+	if (influence < 50){
+		cout << "\nJOBS:\n";
+		cout << "\t1 - Taxi driver";
+		cout << "\n\nChoose one: ";
+		cin >> choice;
+
+		switch(choice){
+			case 1:
+				taxi();
+			default:
+				cout << "\nThat's not a valid option.";
+				job_switch();
+				break;
+			}
+	}
+
+}
+
+int	base_game(){
+
 	while (true){
-		cout << "Whoops, nothing here yet!" << endl;
-    return 0;
+		cout << "\n\n\nCash: $" << cash;
+		cout << "\nInfluence: " << influence;
+		if (cash < 15000){
+			cout << "\n\n\t1 - Jobs";
+			cout <<  "\n\n\tChoice: ";
+			cin >> choice; 
+
+			switch (choice){
+					case 1:
+						cout << "\nLet's see what jobs you have...";
+						job_switch();
+
+					default:
+						cout << "\nPick something, will ya?";
+						base_game();
+
+
+			}
 		}
+		
 	}
 
 }
@@ -49,7 +103,7 @@ int game_switch(){
 	switch(choice){
 		case 1:
 			cout << "Play the game? You got it!\n\n";
-			start_game();
+			base_game();
 			break;
 		case 2:
 			cout << "Head Honcho is the early stages of a 2D style resource management game. Inspired by the property management parts of Grand Theft Auto V, Head Honcho aims to be a fun, intuitive game in a mix of styles from A Dark Room and Roller Coaster Tycoon. This is the high-concept version of the game, which is to get the more technical problems such as economy, time incrementing, and save data out of the way. This version is CLI based, but the final product will have a Sim City 2K-esque look. More roadmaps of this project will be in the wiki.\n";
